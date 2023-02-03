@@ -4,7 +4,7 @@ Creacion de API que busca la información asociada a una pelicula introducida po
 
 ### Prerequisitos
 * Maven: Herramienta para la gestión y construcción de proyectos.
-* Java: Lenguaje de progrmación.
+* Java: Lenguaje de programación.
 * Git: Sistema de control de versiones distribuido.
 
 
@@ -26,8 +26,8 @@ mvn clean package exec:java -D "exec.mainClass"="edu.eci.taller1arep.HttpServer"
 
 * Entrar al browser que desee e ingresar la siguiente direccion: 
 
-
 http://localhost:35000
+
 
 * Por ultimo digitar la pelicula de la cual se desea consultar la información.
 
@@ -44,7 +44,6 @@ mvn javadoc:javadoc
 
 * [NetBeans](https://netbeans.apache.org/) 
 
-* 
 
 ### Autor
 
