@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.tallerarep;
+package edu.eci.taller1arep;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  *
@@ -16,36 +16,48 @@ import java.net.URL;
  */
 public class HttpClient {
     private static final String USER_AGENT = "Mozilla/5.0";
-    private static final String GET_URL = "http://www.omdbapi.com/?apikey=b67e1f4e";
+    private static String GET_URL = "http://www.omdbapi.com/?t=";
+    private static final String API_KEY = "&apikey=b67e1f4e";
 
-    public static void main(String[] args) throws IOException {
+        /**
+     *
+     * @param title String del titulo de la pelicula que se desea buscar
+     * @return JSON con la informacion de la pelicula
+     * @throws IOException
+     */
+    public static String consultarInfo(String title) throws IOException {
+        String res = "";
+        if (!Objects.equals(title, "")) {
+            GET_URL += title;
+            GET_URL += API_KEY;
 
-        URL obj = new URL(GET_URL);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", USER_AGENT);
-        
-        //The following invocation perform the connection implicitly before getting the code
-        int responseCode = con.getResponseCode();
-        System.out.println("GET Response Code :: " + responseCode);
-        
-        if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+            URL obj = new URL(GET_URL);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("User-Agent", USER_AGENT);
+            int responseCode = con.getResponseCode();
+            System.out.println("GET Response Code :: " + responseCode);
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+            if (responseCode == HttpURLConnection.HTTP_OK) { // success
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                res = response.toString();
+            } else {
+                res = "GET request not worked";
+                System.out.println("GET request not worked");
             }
-            in.close();
-
-            // print result
-            System.out.println(response.toString());
-        } else {
-            System.out.println("GET request not worked");
+            System.out.println("GET DONE");
         }
-        System.out.println("GET DONE");
+        GET_URL = "http://www.omdbapi.com/?t=";
+        return res;
     }
-    
 }
+
+    
