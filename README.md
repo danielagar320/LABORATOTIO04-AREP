@@ -1,6 +1,6 @@
-# LABORATORIO 1 AREP
+# LABORATORIO 2 AREP
 
-Creacion de API que busca la información asociada a una pelicula introducida por el usuario.
+Creación de servicio que permita buscar archivos y mostrarlos en el navegador dado el path y la url.
 
 ### Prerequisitos
 * Maven: Herramienta para la gestión y construcción de proyectos.
@@ -14,19 +14,21 @@ Para poder correr el programa se deben seguir los siguientes pasos:
 * Clonar el respositorio con el comando
 
 ```
-git clone https://github.com/danielagar320/LABORATORIO1-AREP.git
+git clone https://github.com/danielagar320/LABORATORIO2-AREP.git
 
 ```
-* Ingresar a la capeta descargada y ejecutar el siguiente comando
+* Ingresar a la capeta siguiente ruta y ejecute la clase main
 
 ```
-mvn clean package exec:java -D "exec.mainClass"="edu.eci.taller1arep.HttpServer" 
+\src\main\java\edu\eci\arep\app\webApps 
 
 ```
 
 * Entrar al browser que desee e ingresar la siguiente direccion: 
 
-http://localhost:35000
+http://localhost:35000/apps/  
+
+puede ingresar index, style, image o main para ver los diferentes archivos.
 
 
 * Por ultimo digitar la pelicula de la cual se desea consultar la información.
