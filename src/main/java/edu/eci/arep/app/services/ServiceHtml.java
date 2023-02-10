@@ -1,4 +1,4 @@
-package edu.eci.taller1arep.services;
+package edu.eci.arep.app.services;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,7 +15,7 @@ public class ServiceHtml implements RESTService{
     }
 
     @Override
-    public String getResponse() throws IOException {
+    public String getResponse() {
         byte[] data = new byte[0];
         try{
             Path archivo = Paths.get("src/main/resource/index.html");

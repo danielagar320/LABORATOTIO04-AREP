@@ -1,4 +1,4 @@
-package edu.eci.taller1arep;
+package edu.eci.arep.app;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
