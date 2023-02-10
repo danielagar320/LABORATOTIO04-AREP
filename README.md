@@ -1,6 +1,6 @@
 # LABORATORIO 2 AREP
 
-Creacion de servicio que permita buscar archivos y mostrarlos en el navegador dado el path y la url.
+Creación de servicio que permita buscar archivos y mostrarlos en el navegador dado el path y la url.
 
 ### Prerequisitos
 * Maven: Herramienta para la gestión y construcción de proyectos.
@@ -14,7 +14,7 @@ Para poder correr el programa se deben seguir los siguientes pasos:
 * Clonar el respositorio con el comando
 
 ```
-git clone https://github.com/danielagar320/LABORATORIO1-AREP.git
+git clone https://github.com/danielagar320/LABORATORIO2-AREP.git
 
 ```
 * Ingresar a la capeta descargada y ejecutar el siguiente comando
