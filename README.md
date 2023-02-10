@@ -17,10 +17,10 @@ Para poder correr el programa se deben seguir los siguientes pasos:
 git clone https://github.com/danielagar320/LABORATORIO2-AREP.git
 
 ```
-* Ingresar a la capeta descargada y ejecutar el siguiente comando
+* Ingresar a la capeta siguiente ruta y ejecute la clase main
 
 ```
-mvn clean package exec:java -D "exec.mainClass"="edu.eci.arep.app.webApps.FirstApp" 
+\src\main\java\edu\eci\arep\app\webApps 
 
 ```
 
