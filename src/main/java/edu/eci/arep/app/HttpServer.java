@@ -64,10 +64,10 @@ public class HttpServer {
                 }
             }
             if(request.startsWith("/apps/")){
-                outputLine = executeService(request.substring(5));
+                outputLine = correrServicio(request.substring(5));
             }
             else if(!Objects.equals(title, "")){
-                outputLine = APIanswer(title);
+                outputLine = answer(title);
             }else {
                 outputLine = respuesta();
             }
@@ -133,7 +133,7 @@ public class HttpServer {
         "</html>";
     }
 
-    private static String APIanswer(String title) throws IOException {
+    private static String answer(String title) throws IOException {
         return "HTTP/1.1 200 OK\r\n"
                 + "Content-Type: application/json\r\n"
                 + "\r\n" +
@@ -145,14 +145,14 @@ public class HttpServer {
                 table(Cache.inMemory(title));
     }
 
-    private String executeService(String serviceName){
+    private String correrServicio(String serviceName){
         RESTService rs = services.get(serviceName);
         String header = rs.getHeader();
         String body = rs.getResponse();
         return header + body;
     }
 
-    public void addServices(String key, RESTService service){
+    public void servicios(String key, RESTService service){
         services.put(key,service);
     }
 }

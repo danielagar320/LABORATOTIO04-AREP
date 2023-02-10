@@ -11,10 +11,10 @@ import edu.eci.arep.app.services.ServicePng;
 public class FirstApp {
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.getInstance();
-        server.addServices("/index", new ServiceHtml());
-        server.addServices("/estilos", new ServiceCss());
-        server.addServices("/javaScript", new ServiceJs());
-        server.addServices("/imagen", new ServicePng());
+        server.servicios("/index", new ServiceHtml());
+        server.servicios("/style", new ServiceCss());
+        server.servicios("/main", new ServiceJs());
+        server.servicios("/image", new ServicePng());
         server.run(args);
     }
     
