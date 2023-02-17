@@ -1,11 +1,18 @@
 package edu.eci.arep.app;
+
+
+
+
 import java.net.*;
+import java.security.Provider.Service;
 import java.io.*;
 import java.util.*;
 import java.util.Arrays;
 import java.util.HashMap;
 
 import edu.eci.arep.app.services.RESTService;
+import edu.eci.arep.app.sparkServices.Answer;
+import edu.eci.arep.app.sparkServices.ServiceSpark;
 
 
 /**
@@ -16,6 +23,7 @@ public class HttpServer {
 
     private static HttpServer instance = new HttpServer();
     private Map<String, RESTService> services = new HashMap<>();
+    private Answer ans;
 
     private HttpServer(){}
 
@@ -45,14 +53,16 @@ public class HttpServer {
             }
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String inputLine, outputLine;
+            String inputLine, outputLine = null;
             String title = "";
             boolean first_line = true;
             String request = "/simple";
+            String verb = "";
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Received: " + inputLine);
                 if(first_line){
                     request = inputLine.split(" ")[1];
+                    verb = inputLine.split(" ")[0];
                     first_line = false;
                 }
                 if(inputLine.contains("title?name")){
@@ -63,8 +73,20 @@ public class HttpServer {
                     break;
                 }
             }
-            if(request.startsWith("/apps/")){
-                outputLine = correrServicio(request.substring(5));
+            if (Objects.equals(verb, "GET")) {
+                if (ServiceSpark.cache.containsKey(request)) {
+                    outputLine = ServiceSpark.cache.get(request).getResponse();
+                } else if (!ServiceSpark.cache.containsKey(request) && !request.contains("favicon")) {
+                    outputLine = ServiceSpark.setCache(request);
+                }
+            }else if (Objects.equals(verb, "POST")) {
+                if(!request.contains("favicon")){
+                    String value = request.split("=")[1];
+                    String key = request.split("=")[0];
+                    key = key.split("\\?")[1];
+                    outputLine = ServiceSpark.post(value,key);
+
+                }
             }
             else if(!Objects.equals(title, "")){
                 outputLine = answer(title);
@@ -143,16 +165,5 @@ public class HttpServer {
                 "}\n" +
                 "</style>"+
                 table(Cache.inMemory(title));
-    }
-
-    private String correrServicio(String serviceName){
-        RESTService rs = services.get(serviceName);
-        String header = rs.getHeader();
-        String body = rs.getResponse();
-        return header + body;
-    }
-
-    public void servicios(String key, RESTService service){
-        services.put(key,service);
     }
 }
