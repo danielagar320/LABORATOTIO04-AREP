@@ -1,6 +1,6 @@
-# LABORATORIO 2 AREP
+# LABORATORIO 3 AREP
 
-Creación de servicio que permita buscar archivos y mostrarlos en el navegador dado el path y la url.
+Creación de simulación del framework spark.
 
 ### Prerequisitos
 * Maven: Herramienta para la gestión y construcción de proyectos.
@@ -14,10 +14,10 @@ Para poder correr el programa se deben seguir los siguientes pasos:
 * Clonar el respositorio con el comando
 
 ```
-git clone https://github.com/danielagar320/LABORATORIO2-AREP.git
+git clone https://github.com/danielagar320/LABORATORIO-03-AREP.git
 
 ```
-* Ingresar a la capeta siguiente ruta y ejecute la clase main
+* Ingresar a la capeta siguiente ruta y ejecutar la clase main
 
 ```
 \src\main\java\edu\eci\arep\app\webApps 
@@ -31,20 +31,11 @@ http://localhost:35000/apps/
 puede ingresar index, style, image o main para ver los diferentes archivos.
 
 
-* Por ultimo digitar la pelicula de la cual se desea consultar la información.
 
-### Documentación
 
-* Para generar el JavaDoc ejecutar el siguiente comando:
+### Test
 
-```
-mvn javadoc:javadoc 
-
-```
-
-### Construido con
-
-* [NetBeans](https://netbeans.apache.org/) 
+![](img/test.png)
 
 
 ### Autor
