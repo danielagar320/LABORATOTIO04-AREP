@@ -1,6 +1,6 @@
-# LABORATORIO 3 AREP
+# LABORATORIO 4 AREP
 
-Creación de simulación del framework spark.
+En este laboratorio se creo un servidor Web (tipo Apachae) el cual es capaz de entregar páginas html e imagenes tipo PNG.
 
 ### Prerequisitos
 * Maven: Herramienta para la gestión y construcción de proyectos.
@@ -14,7 +14,7 @@ Para poder correr el programa se deben seguir los siguientes pasos:
 * Clonar el respositorio con el comando
 
 ```
-git clone https://github.com/danielagar320/LABORATORIO-03-AREP.git
+git clone https://github.com/danielagar320/LABORATOTIO04-AREP.git
 
 ```
 * Ingresar a la capeta siguiente ruta y ejecutar la clase main
@@ -26,7 +26,7 @@ git clone https://github.com/danielagar320/LABORATORIO-03-AREP.git
 
 * Entrar al browser que desee e ingresar la siguiente direccion: 
 
-http://localhost:35000/apps/  
+http://localhost:35000/  
 
 puede ingresar index, style, image o main para ver los diferentes archivos.
 
@@ -35,7 +35,11 @@ puede ingresar index, style, image o main para ver los diferentes archivos.
 
 ### Test
 
-![](img/test.png)
+![](img/image.png)
+
+![](img/style.png)
+
+![](img/index.png)
 
 
 ### Autor

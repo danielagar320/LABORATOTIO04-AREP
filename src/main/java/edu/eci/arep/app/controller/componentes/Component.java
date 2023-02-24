@@ -1,4 +1,4 @@
-package edu.eci.arep.app.controller.annotations;
+package edu.eci.arep.app.controller.componentes;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

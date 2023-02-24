@@ -1,6 +1,7 @@
 package edu.eci.arep.app.controller;
-import edu.eci.arep.app.controller.annotations.Component;
-import edu.eci.arep.app.controller.annotations.RequestMapping;
+import edu.eci.arep.app.HttpServer;
+import edu.eci.arep.app.controller.componentes.Component;
+import edu.eci.arep.app.controller.componentes.RequestMapping;
 
 
 import javax.imageio.ImageIO;
