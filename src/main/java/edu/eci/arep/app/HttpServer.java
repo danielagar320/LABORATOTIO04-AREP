@@ -1,18 +1,19 @@
 package edu.eci.arep.app;
-
-
-
-
 import java.net.*;
-import java.security.Provider.Service;
 import java.io.*;
 import java.util.*;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
+
 import java.util.Arrays;
 import java.util.HashMap;
 
-import edu.eci.arep.app.services.RESTService;
 import edu.eci.arep.app.sparkServices.Answer;
-import edu.eci.arep.app.sparkServices.ServiceSpark;
+
+
+
+import edu.eci.arep.app.controller.annotations.Component;
+import edu.eci.arep.app.controller.annotations.RequestMapping;
 
 
 /**
@@ -22,8 +23,10 @@ import edu.eci.arep.app.sparkServices.ServiceSpark;
 public class HttpServer {
 
     private static HttpServer instance = new HttpServer();
-    private Map<String, RESTService> services = new HashMap<>();
+    private Map<String, Method> services = new HashMap<>();
     private Answer ans;
+    private static OutputStream outputStream = null;
+    private final String direccion = "edu/eci/arep/app/controller";
 
     private HttpServer(){}
 
@@ -32,7 +35,21 @@ public class HttpServer {
     }
 
 
-    public void run(String[] args) throws IOException {
+    public void run(String[] args) throws IOException, ClassNotFoundException {
+        List<Class<?>> classes = getClasses();
+        for (Class<?> clasS:classes){
+            if(clasS.isAnnotationPresent(Component.class)){
+                Class<?> c = Class.forName(clasS.getName());
+                Method[] m = c.getMethods();
+                for (Method me: m){
+                    if(me.isAnnotationPresent(RequestMapping.class)){
+                        String key = me.getAnnotation(RequestMapping.class).value();
+                        services.put(key,me);
+                    }
+                }
+            }
+
+        }
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(35000);
@@ -58,6 +75,7 @@ public class HttpServer {
             boolean first_line = true;
             String request = "/simple";
             String verb = "";
+            outputStream = clientSocket.getOutputStream();
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Received: " + inputLine);
                 if(first_line){
@@ -74,18 +92,9 @@ public class HttpServer {
                 }
             }
             if (Objects.equals(verb, "GET")) {
-                if (ServiceSpark.cache.containsKey(request)) {
-                    outputLine = ServiceSpark.cache.get(request).getResponse();
-                } else if (!ServiceSpark.cache.containsKey(request) && !request.contains("favicon")) {
-                    outputLine = ServiceSpark.setCache(request);
-                }
-            }else if (Objects.equals(verb, "POST")) {
-                if(!request.contains("favicon")){
-                    String value = request.split("=")[1];
-                    String key = request.split("=")[0];
-                    key = key.split("\\?")[1];
-                    outputLine = ServiceSpark.post(value,key);
-
+                System.out.println(request);
+                if(services.containsKey(request)){
+                    outputLine = services.get(request).invoke(null).toString();
                 }
             }
             else if(!Objects.equals(title, "")){
@@ -166,4 +175,34 @@ public class HttpServer {
                 "</style>"+
                 table(Cache.inMemory(title));
     }
+
+    private List<Class<?>> getClasses(){
+        List<Class<?>> classes = new ArrayList<>();
+        try{
+            for (String cp: classPaths()){
+                File file = new File(cp + "/" + direccion);
+                if(file.exists() && file.isDirectory()){
+                    for (File cf: Objects.requireNonNull(file.listFiles())){
+                        if(cf.isFile() && cf.getName().endsWith(".class")){
+                            String rootTemp = direccion.replace("/",".");
+                            String className = rootTemp+"."+cf.getName().replace(".class","");
+                            Class<?> clasS =  Class.forName(className);
+                            classes.add(clasS);
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return classes;
+    }
+
+    private ArrayList<String> classPaths(){
+        String classPath = System.getProperty("java.class.path");
+        String[] classPaths =  classPath.split(System.getProperty("path.separator"));
+        return new ArrayList<>(Arrays.asList(classPaths));
+    }
+
+
 }
